@@ -42,7 +42,7 @@ void main ()
 	strcpy(msg,buf);	
 	retval = write(sockcli,msg,strlen(msg));
 	
-	printf ("Selesai Kirim Pesan");
+	printf ("Pesan telah dikirim");
 	close(sockcli);
 	close(sockfd);
 	
