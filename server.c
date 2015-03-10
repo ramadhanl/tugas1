@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+pthread_mutex_t lock;
 void main ()
 {
 	int sockfd, sockcli;
