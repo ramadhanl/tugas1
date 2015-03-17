@@ -222,7 +222,7 @@ void *client_handler(void *fd) {
             pthread_mutex_unlock(&clientlist_mutex);
             break;
         }
-        printf("[%d] %s %s %s\n", threadinfo.sockfd, packet.option, packet.alias, packet.buff);
+        printf("[%d] %s %s %s", threadinfo.sockfd, packet.option, packet.alias, packet.buff);
         if(!strcmp(packet.option, "alias")) {
             printf("Set alias to %s\n", packet.alias);
             pthread_mutex_lock(&clientlist_mutex);
@@ -234,6 +234,29 @@ void *client_handler(void *fd) {
                 }
             }
             pthread_mutex_unlock(&clientlist_mutex);
+        }
+        else if(!strcmp(packet.option, "whos")) {
+        	printf("\nMasuk di whos lo\n");
+        	printf("\n hai");
+            int count=0;
+            printf("haii %d ",count);
+            for(curr = client_list.head; curr != NULL; curr = curr->next) {
+            	printf("%d ",count);count++;
+                if(strcmp(packet.alias, curr->threadinfo.alias) == 0) {
+                	struct PACKET spacket;
+		            memset(&spacket, 0, sizeof(struct PACKET));
+                	strcpy(spacket.option, "whos");
+                	strcpy(spacket.alias, packet.alias);
+                	strcpy(spacket.buff, "Yang online :\n");
+                    for(curr = client_list.head; curr != NULL; curr = curr->next) {
+		                strcat(spacket.buff, curr->threadinfo.alias);
+		                strcat(spacket.buff, "\n");
+		            }
+		            sent = send(curr->threadinfo.sockfd, (void *)&spacket, sizeof(struct PACKET), 0);
+		            printf("%s",spacket.buff);
+                }
+            }
+            //pthread_mutex_unlock(&clientlist_mutex);
         }
         else if(!strcmp(packet.option, "whisp")) {
             int i;
@@ -268,7 +291,7 @@ void *client_handler(void *fd) {
             pthread_mutex_unlock(&clientlist_mutex);
         }
         else if(!strcmp(packet.option, "exit")) {
-            printf("[%d] %s has disconnected...\n", threadinfo.sockfd, threadinfo.alias);
+            printf("\n[%d] %s has disconnected...\n", threadinfo.sockfd, threadinfo.alias);
             pthread_mutex_lock(&clientlist_mutex);
             list_delete(&client_list, &threadinfo);
             pthread_mutex_unlock(&clientlist_mutex);
@@ -277,6 +300,7 @@ void *client_handler(void *fd) {
         else {
             fprintf(stderr, "Garbage data from [%d] %s...\n", threadinfo.sockfd, threadinfo.alias);
         }
+        printf("\n");
     }
  
     /* clean up */
