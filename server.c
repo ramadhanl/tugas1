@@ -224,7 +224,7 @@ void *client_handler(void *fd) {
         }
         printf("[%d] %s %s %s\n", threadinfo.sockfd, packet.option, packet.alias, packet.buff);
         if(!strcmp(packet.option, "alias")) {
-            printf("Set alias to %s\n", packet.alias);
+        	printf("Set alias to %s\n", packet.alias);
             pthread_mutex_lock(&clientlist_mutex);
             for(curr = client_list.head; curr != NULL; curr = curr->next) {
                 if(compare(&curr->threadinfo, &threadinfo) == 0) {
@@ -235,31 +235,25 @@ void *client_handler(void *fd) {
             }
             pthread_mutex_unlock(&clientlist_mutex);
         }
-        else if(!strcmp(packet.option, "whos")) {
-        	printf("\nMasuk di whos lo\n");
-//        	printf("\n hai");
-//            int count=0;
-//            printf("haii %d ",count);
-            pthread_mutex_lock(&clientlist_mutex);
-            for(curr = client_list.head; curr != NULL; curr = curr->next) {
-            	//printf("%d ",count);count++;
-                if(strcmp(packet.alias, curr->threadinfo.alias) == 0) {
-                	struct PACKET spacket;
-		            memset(&spacket, 0, sizeof(struct PACKET));
-                	strcpy(spacket.option, "whos");
-                	strcpy(spacket.alias, packet.alias);
-                	strcpy(spacket.buff, "Yang online :\n");
-                    for(curr = client_list.head; curr != NULL; curr = curr->next) {
-		                strcat(spacket.buff, curr->threadinfo.alias);
-		                strcat(spacket.buff, "\n");
-		            }
-		            sent = send(curr->threadinfo.sockfd, (void *)&spacket, sizeof(struct PACKET), 0);
-		            //printf("%s",spacket.buff);
-                }
-            }
+        else if(!strcmp(packet.option,"list")){
+        	struct PACKET spacket;
+        	memset(&spacket, 0, sizeof(struct PACKET));
+        	strcpy(spacket.option, "list");
+        	strcpy(spacket.alias, packet.alias);
+        	pthread_mutex_lock(&clientlist_mutex);
+        	strcpy(spacket.buff, "Yang online :\n");
+			for(curr = client_list.head; curr != NULL; curr = curr->next) {
+				if(strcmp(curr->threadinfo.alias,packet.alias)!=0){
+					strcat(spacket.buff, "[");strcat(spacket.buff, curr->threadinfo.alias);strcat(spacket.buff, "]");
+			    	strcat(spacket.buff, "\n");
+				}
+			   
+			}
+			//printf("%s |%s |%s ",spacket.alias,spacket.option,spacket.buff);
+			sent = send(threadinfo.sockfd, (void *)&spacket, sizeof(struct PACKET), 0);
             pthread_mutex_unlock(&clientlist_mutex);
         }
-        else if(!strcmp(packet.option, "whisp")) {
+        else if(!strcmp(packet.option, "pm")) {
             int i;
             char target[ALIASLEN];
             for(i = 0; packet.buff[i] != ' '; i++); packet.buff[i++] = 0;
@@ -270,7 +264,7 @@ void *client_handler(void *fd) {
                     struct PACKET spacket;
                     memset(&spacket, 0, sizeof(struct PACKET));
                     if(!compare(&curr->threadinfo, &threadinfo)) continue;
-                    strcpy(spacket.option, "msg");
+                    strcpy(spacket.option, "pm");
                     strcpy(spacket.alias, packet.alias);
                     strcpy(spacket.buff, &packet.buff[i]);
                     sent = send(curr->threadinfo.sockfd, (void *)&spacket, sizeof(struct PACKET), 0);
@@ -279,7 +273,7 @@ void *client_handler(void *fd) {
             pthread_mutex_unlock(&clientlist_mutex);
         }
         else if(!strcmp(packet.option, "send")) {
-            pthread_mutex_lock(&clientlist_mutex);
+        	pthread_mutex_lock(&clientlist_mutex);
             for(curr = client_list.head; curr != NULL; curr = curr->next) {
                 struct PACKET spacket;
                 memset(&spacket, 0, sizeof(struct PACKET));

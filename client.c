@@ -44,7 +44,7 @@ int connect_with_server();
 void setalias(struct USER *me);
 void logout(struct USER *me);
 void login(struct USER *me);
-void whos(struct USER *me);
+void list(struct USER *me);
 void *receiver(void *param);
 void sendtoall(struct USER *me, char *msg);
 void sendtoalias(struct USER *me, char * target, char *msg);
@@ -83,9 +83,6 @@ int main(int argc, char **argv) {
             }
             login(&me);
         }
-        else if(!strncmp(option, "whos", 4)) {
-            whos(&me);
-        }
         else if(!strncmp(option, "alias", 5)) {
             char *ptr = strtok(option, " ");
             ptr = strtok(0, " ");
@@ -97,7 +94,7 @@ int main(int argc, char **argv) {
                 setalias(&me);
             }
         }
-        else if(!strncmp(option, "whisp", 5)) {
+        else if(!strncmp(option, "pm", 2)) {
             char *ptr = strtok(option, " ");
             char temp[ALIASLEN];
             ptr = strtok(0, " ");
@@ -113,6 +110,9 @@ int main(int argc, char **argv) {
         }
         else if(!strncmp(option, "send", 4)) {
             sendtoall(&me, &option[5]);
+        }
+        else if(!strncmp(option, "list", 4)) {
+            list(&me);
         }
         else if(!strncmp(option, "logout", 6)) {
             logout(&me);
@@ -135,6 +135,21 @@ void whos(struct USER *me){
     strcpy(packet.alias, me->alias);
     //strcpy(packet.buff, "melihat yang online");
     
+    /* send request to close this connetion */
+    sent = send(sockfd, (void *)&packet, sizeof(struct PACKET), 0);
+}
+
+void list(struct USER *me){
+	int sent;
+	struct PACKET packet;
+	
+	if(!isconnected) {
+        fprintf(stderr, "You are not connected...\n");
+        return;
+    }
+    memset(&packet, 0, sizeof(struct PACKET));
+    strcpy(packet.option, "list");
+    strcpy(packet.alias, me->alias);
     /* send request to close this connetion */
     sent = send(sockfd, (void *)&packet, sizeof(struct PACKET), 0);
 }
@@ -247,7 +262,13 @@ void *receiver(void *param) {
             close(sockfd);
             break;
         }
-        if(recvd > 0) {
+        else if(recvd > 0 && (strcmp(packet.option,"pm")==0)) {
+            printf("PM-[%s]: %s\n", packet.alias, packet.buff);
+        }
+        else if(recvd > 0 && (strcmp(packet.option,"list")==0)) {
+            printf("%s\n",packet.buff);
+        }
+        else {
             printf("[%s]: %s\n", packet.alias, packet.buff);
         }
         memset(&packet, 0, sizeof(struct PACKET));
@@ -295,7 +316,7 @@ void sendtoalias(struct USER *me, char *target, char *msg) {
     targetlen = strlen(target);
     
     memset(&packet, 0, sizeof(struct PACKET));
-    strcpy(packet.option, "whisp");
+    strcpy(packet.option, "pm");
     strcpy(packet.alias, me->alias);
     strcpy(packet.buff, target);
     strcpy(&packet.buff[targetlen], " ");
