@@ -207,15 +207,62 @@ void *io_handler(void *param) {
     }
     return NULL;
 }
- 
+struct PACKET packet;
+void ambildata(){
+	//printf("\n Panjang data : %d \n huruf ke 5 : %c\nhuruf ke 6 : %c\nhuruf ke 7 : %c\n",strlen(packet.option),packet.option[5],packet.option[6],packet.option[7]);
+	int i,a,count=0,hit=0,hit2=0;
+	char pesan[300],option[16],alias[32],buff[60];
+	//printf("\nIsi packet.option : %s\n",packet.option);
+	strcpy(pesan,"");
+	for(a=0;a<strlen(packet.option);a++){
+		pesan[a]=packet.option[a];
+	}
+	//printf("\nIsi pesan : %s\n",pesan);
+	strcpy(packet.option,"");
+	strcpy(packet.alias,"");
+	strcpy(packet.buff,"");
+	strcpy(option,"");
+	strcpy(alias,"");
+	strcpy(buff,"");
+	for(i=0;i<strlen(pesan);i++){
+		if(pesan[i]=='$')
+			count++;
+		else
+			{
+				if(count==0){
+					option[i]=pesan[i];
+					//printf("\noption : %s",option);
+				}
+				else if(count==1){
+					alias[hit]=pesan[i];
+					hit++;
+				}
+				else if(count==2){
+					buff[i]=pesan[i];
+					hit2++;
+				}
+			}
+			
+	}
+	strcpy(packet.option,option);
+	strcpy(packet.alias,alias);
+	strcpy(packet.buff,buff);
+	//printf("\npacket.option : %s",packet.option);
+	//printf("\npacket.alias : %s",packet.alias);
+	//printf("\npacket.buff : %s\n",packet.buff);
+	if(hit==0){
+		strcpy(packet.alias,"Anonymous");
+	}
+}
+
 void *client_handler(void *fd) {
     struct THREADINFO threadinfo = *(struct THREADINFO *)fd;
-    struct PACKET packet;
     struct LLNODE *curr;
     int bytes, sent;
     while(1) {
         bytes = recv(threadinfo.sockfd, (void *)&packet, sizeof(struct PACKET), 0);
-        if(!bytes) {
+        ambildata();
+		if(!bytes) {
             fprintf(stderr, "Connection lost from [%d] %s...\n", threadinfo.sockfd, threadinfo.alias);
             pthread_mutex_lock(&clientlist_mutex);
             list_delete(&client_list, &threadinfo);
@@ -223,7 +270,7 @@ void *client_handler(void *fd) {
             break;
         }
         printf("[%d] %s %s %s\n", threadinfo.sockfd, packet.option, packet.alias, packet.buff);
-        if(!strcmp(packet.option, "alias")) {
+        if(!strcmp(packet.option, "name")) {
         	printf("Set alias to %s\n", packet.alias);
             pthread_mutex_lock(&clientlist_mutex);
             for(curr = client_list.head; curr != NULL; curr = curr->next) {
@@ -253,7 +300,7 @@ void *client_handler(void *fd) {
 			sent = send(threadinfo.sockfd, (void *)&spacket, sizeof(struct PACKET), 0);
             pthread_mutex_unlock(&clientlist_mutex);
         }
-        else if(!strcmp(packet.option, "pm")) {
+        else if(!strcmp(packet.option, "pmpm")) {
             int i;
             char target[ALIASLEN];
             for(i = 0; packet.buff[i] != ' '; i++); packet.buff[i++] = 0;

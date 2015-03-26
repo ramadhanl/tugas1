@@ -41,16 +41,18 @@
             this.listOnline = new System.Windows.Forms.ListBox();
             this.lblOnline = new System.Windows.Forms.Label();
             this.btnLogout = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCheckOnline = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lblMyName = new System.Windows.Forms.Label();
             this.listChat = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblAlias
             // 
             this.lblAlias.AutoSize = true;
-            this.lblAlias.Location = new System.Drawing.Point(26, 21);
+            this.lblAlias.Location = new System.Drawing.Point(20, 18);
             this.lblAlias.Name = "lblAlias";
             this.lblAlias.Size = new System.Drawing.Size(61, 13);
             this.lblAlias.TabIndex = 0;
@@ -58,7 +60,7 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(236, 15);
+            this.btnLogin.Location = new System.Drawing.Point(230, 12);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 23);
             this.btnLogin.TabIndex = 1;
@@ -68,14 +70,14 @@
             // 
             // txtAlias
             // 
-            this.txtAlias.Location = new System.Drawing.Point(93, 18);
+            this.txtAlias.Location = new System.Drawing.Point(87, 15);
             this.txtAlias.Name = "txtAlias";
             this.txtAlias.Size = new System.Drawing.Size(136, 20);
             this.txtAlias.TabIndex = 2;
             // 
             // txtPublicChat
             // 
-            this.txtPublicChat.Location = new System.Drawing.Point(22, 279);
+            this.txtPublicChat.Location = new System.Drawing.Point(23, 270);
             this.txtPublicChat.Name = "txtPublicChat";
             this.txtPublicChat.Size = new System.Drawing.Size(193, 29);
             this.txtPublicChat.TabIndex = 4;
@@ -83,7 +85,7 @@
             // 
             // btnPublicChat
             // 
-            this.btnPublicChat.Location = new System.Drawing.Point(218, 279);
+            this.btnPublicChat.Location = new System.Drawing.Point(219, 270);
             this.btnPublicChat.Name = "btnPublicChat";
             this.btnPublicChat.Size = new System.Drawing.Size(103, 29);
             this.btnPublicChat.TabIndex = 5;
@@ -92,7 +94,7 @@
             // 
             // txtPrivateChat
             // 
-            this.txtPrivateChat.Location = new System.Drawing.Point(22, 321);
+            this.txtPrivateChat.Location = new System.Drawing.Point(23, 312);
             this.txtPrivateChat.Name = "txtPrivateChat";
             this.txtPrivateChat.Size = new System.Drawing.Size(193, 30);
             this.txtPrivateChat.TabIndex = 6;
@@ -100,7 +102,7 @@
             // 
             // btnPrivateChat
             // 
-            this.btnPrivateChat.Location = new System.Drawing.Point(218, 321);
+            this.btnPrivateChat.Location = new System.Drawing.Point(219, 312);
             this.btnPrivateChat.Name = "btnPrivateChat";
             this.btnPrivateChat.Size = new System.Drawing.Size(103, 27);
             this.btnPrivateChat.TabIndex = 7;
@@ -109,7 +111,7 @@
             // 
             // txtFriend
             // 
-            this.txtFriend.Location = new System.Drawing.Point(428, 18);
+            this.txtFriend.Location = new System.Drawing.Point(429, 9);
             this.txtFriend.Name = "txtFriend";
             this.txtFriend.Size = new System.Drawing.Size(139, 20);
             this.txtFriend.TabIndex = 8;
@@ -117,7 +119,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(363, 21);
+            this.label1.Location = new System.Drawing.Point(364, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 9;
@@ -127,7 +129,7 @@
             // 
             this.lblChatBox.AutoSize = true;
             this.lblChatBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblChatBox.Location = new System.Drawing.Point(107, 56);
+            this.lblChatBox.Location = new System.Drawing.Point(108, 47);
             this.lblChatBox.Name = "lblChatBox";
             this.lblChatBox.Size = new System.Drawing.Size(108, 25);
             this.lblChatBox.TabIndex = 10;
@@ -136,7 +138,7 @@
             // listOnline
             // 
             this.listOnline.FormattingEnabled = true;
-            this.listOnline.Location = new System.Drawing.Point(343, 86);
+            this.listOnline.Location = new System.Drawing.Point(344, 77);
             this.listOnline.Name = "listOnline";
             this.listOnline.Size = new System.Drawing.Size(247, 173);
             this.listOnline.TabIndex = 11;
@@ -145,7 +147,7 @@
             // 
             this.lblOnline.AutoSize = true;
             this.lblOnline.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOnline.Location = new System.Drawing.Point(338, 58);
+            this.lblOnline.Location = new System.Drawing.Point(339, 49);
             this.lblOnline.Name = "lblOnline";
             this.lblOnline.Size = new System.Drawing.Size(171, 25);
             this.lblOnline.TabIndex = 12;
@@ -155,26 +157,27 @@
             // 
             this.btnLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.btnLogout.Location = new System.Drawing.Point(343, 279);
+            this.btnLogout.Location = new System.Drawing.Point(344, 270);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(247, 72);
             this.btnLogout.TabIndex = 13;
             this.btnLogout.Text = "Logout";
             this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
-            // button1
+            // btnCheckOnline
             // 
-            this.button1.Location = new System.Drawing.Point(513, 59);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(77, 24);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "Check";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCheckOnline.Location = new System.Drawing.Point(516, 47);
+            this.btnCheckOnline.Name = "btnCheckOnline";
+            this.btnCheckOnline.Size = new System.Drawing.Size(75, 23);
+            this.btnCheckOnline.TabIndex = 20;
+            this.btnCheckOnline.Text = "Check";
+            this.btnCheckOnline.Click += new System.EventHandler(this.btnCheckOnline_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 263);
+            this.label2.Location = new System.Drawing.Point(21, 254);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 13);
             this.label2.TabIndex = 15;
@@ -184,7 +187,7 @@
             // 
             this.lblMyName.AutoSize = true;
             this.lblMyName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMyName.Location = new System.Drawing.Point(118, 262);
+            this.lblMyName.Location = new System.Drawing.Point(119, 253);
             this.lblMyName.Name = "lblMyName";
             this.lblMyName.Size = new System.Drawing.Size(0, 15);
             this.lblMyName.TabIndex = 16;
@@ -192,18 +195,38 @@
             // listChat
             // 
             this.listChat.FormattingEnabled = true;
-            this.listChat.Location = new System.Drawing.Point(22, 86);
+            this.listChat.Location = new System.Drawing.Point(23, 77);
             this.listChat.Name = "listChat";
             this.listChat.Size = new System.Drawing.Size(299, 173);
             this.listChat.TabIndex = 17;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(23, 345);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(46, 13);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "Status : ";
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(65, 345);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(33, 13);
+            this.lblStatus.TabIndex = 19;
+            this.lblStatus.Text = "None";
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(603, 363);
+            this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.listChat);
             this.Controls.Add(this.lblMyName);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnCheckOnline);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.lblOnline);
             this.Controls.Add(this.listOnline);
@@ -241,10 +264,12 @@
         private System.Windows.Forms.ListBox listOnline;
         private System.Windows.Forms.Label lblOnline;
         private System.Windows.Forms.Button btnLogout;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCheckOnline;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblMyName;
         private System.Windows.Forms.ListBox listChat;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblStatus;
     }
 }
 
