@@ -13,7 +13,7 @@
 #include <sys/socket.h>
  
 #define IP "127.0.0.1"
-#define PORT 8080
+#define PORT 8888
 #define BACKLOG 10
 #define CLIENTS 10
  

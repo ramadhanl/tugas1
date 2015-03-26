@@ -1,0 +1,9 @@
+C:\cygwin64\home\visual_studio\Chat\Chat\bin\Debug\Chat.exe.config
+C:\cygwin64\home\visual_studio\Chat\Chat\bin\Debug\Chat.exe
+C:\cygwin64\home\visual_studio\Chat\Chat\bin\Debug\Chat.pdb
+C:\cygwin64\home\visual_studio\Chat\Chat\obj\Debug\Chat.csprojResolveAssemblyReference.cache
+C:\cygwin64\home\visual_studio\Chat\Chat\obj\Debug\Chat.Form1.resources
+C:\cygwin64\home\visual_studio\Chat\Chat\obj\Debug\Chat.Properties.Resources.resources
+C:\cygwin64\home\visual_studio\Chat\Chat\obj\Debug\Chat.csproj.GenerateResource.Cache
+C:\cygwin64\home\visual_studio\Chat\Chat\obj\Debug\Chat.exe
+C:\cygwin64\home\visual_studio\Chat\Chat\obj\Debug\Chat.pdb

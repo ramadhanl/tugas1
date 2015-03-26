@@ -13,7 +13,7 @@
 #include <sys/socket.h>
  
 #define SERVERIP "127.0.0.1"
-#define SERVERPORT 8080
+#define SERVERPORT 8888
  
 #define BUFFSIZE 1024
 #define ALIASLEN 32
