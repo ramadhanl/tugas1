@@ -208,10 +208,10 @@ void *io_handler(void *param) {
     return NULL;
 }
 struct PACKET packet;
+char pesan[300],option[16],alias[32],buff[60],targetpm[50];
 void ambildata(){
 	//printf("\n Panjang data : %d \n huruf ke 5 : %c\nhuruf ke 6 : %c\nhuruf ke 7 : %c\n",strlen(packet.option),packet.option[5],packet.option[6],packet.option[7]);
 	int i,a,count=0,hit=0,hit2=0;
-	char pesan[300],option[16],alias[32],buff[60];
 	//printf("\nIsi packet.option : %s\n",packet.option);
 	strcpy(pesan,"");
 	for(a=0;a<strlen(packet.option);a++){
@@ -260,12 +260,16 @@ void *client_handler(void *fd) {
     struct THREADINFO threadinfo = *(struct THREADINFO *)fd;
     struct LLNODE *curr;
     int bytes, sent;
-    char pesan[200];
     while(1) {
     	strcpy(packet.option,"");
 		strcpy(packet.alias,"");
 		strcpy(packet.buff,"");
-		memset(&packet, 0, 0);
+		memset(&packet, 0, sizeof(struct PACKET));
+		memset(&pesan[0], 0, sizeof(pesan));
+		memset(&option[0], 0, sizeof(option));
+		memset(&alias[0], 0, sizeof(alias));
+		memset(&buff[0], 0, sizeof(buff));
+		memset(&targetpm[0], 0, sizeof(targetpm));
         bytes = recv(threadinfo.sockfd, (void *)&packet, sizeof(struct PACKET), 0);
         ambildata();
 		if(!bytes) {
@@ -291,34 +295,55 @@ void *client_handler(void *fd) {
         else if(!strcmp(packet.option,"list")){
         	strcpy(pesan,"list$");
         	strcat(pesan,packet.alias);
-        	pthread_mutex_lock(&clientlist_mutex);
         	strcat(pesan, "$");
+        	//printf("\n1.Isi pesan : %s",pesan);
+        	pthread_mutex_lock(&clientlist_mutex);
 			for(curr = client_list.head; curr != NULL; curr = curr->next) {
 				if(strcmp(curr->threadinfo.alias,packet.alias)!=0){
 					strcat(pesan, "[");strcat(pesan, curr->threadinfo.alias);strcat(pesan, "]");
 			    	strcat(pesan, "%");
 				}
-			   
 			}
 			//printf("%s |%s |%s ",spacket.alias,spacket.option,spacket.buff);
+			//printf("\n2.Isi pesan : %s",pesan);
 			sent = send(threadinfo.sockfd, pesan, 200, 0);
             pthread_mutex_unlock(&clientlist_mutex);
         }
         else if(!strcmp(packet.option, "pmpm")) {
             int i;
-            char target[ALIASLEN];
-            for(i = 0; packet.buff[i] != ' '; i++); packet.buff[i++] = 0;
-            strcpy(target, packet.buff);
+            char target[ALIASLEN],isi[100];
+            int count=0,hit=0;
+            for(i=0;i<strlen(packet.buff);i++){
+				if(packet.buff[i]=='%')
+					count++;
+				else
+					{
+						if(count==0){
+							target[i]=packet.buff[i];
+						}
+						else if(count==1){
+							isi[hit]=packet.buff[i];
+							hit++;
+						}
+					}
+					
+			}
+            strcpy(pesan,"pmpm$");
+        	strcat(pesan,packet.alias);
+        	strcat(pesan, "$");
+            //for(i = 0; packet.buff[i] != ' '; i++); packet.buff[i++] = 0;
+            //strcpy(target, packet.buff);
+            strcat(pesan, isi);
             pthread_mutex_lock(&clientlist_mutex);
             for(curr = client_list.head; curr != NULL; curr = curr->next) {
                 if(strcmp(target, curr->threadinfo.alias) == 0) {
                     struct PACKET spacket;
                     memset(&spacket, 0, sizeof(struct PACKET));
                     if(!compare(&curr->threadinfo, &threadinfo)) continue;
-                    strcpy(spacket.option, "pmpm");
-                    strcpy(spacket.alias, packet.alias);
-                    strcpy(spacket.buff, &packet.buff[i]);
-                    sent = send(curr->threadinfo.sockfd, (void *)&spacket, sizeof(struct PACKET), 0);
+                    //strcpy(spacket.option, "pmpm");
+                    //strcpy(spacket.alias, packet.alias);
+                    //strcpy(spacket.buff, &packet.buff[i]);
+                    sent = send(curr->threadinfo.sockfd, pesan, 200, 0);
                 }
             }
             pthread_mutex_unlock(&clientlist_mutex);
@@ -329,10 +354,14 @@ void *client_handler(void *fd) {
                 struct PACKET spacket;
                 memset(&spacket, 0, sizeof(struct PACKET));
                 if(!compare(&curr->threadinfo, &threadinfo)) continue;
-                strcpy(spacket.option, "send");
-                strcpy(spacket.alias, packet.alias);
-                strcpy(spacket.buff, packet.buff);
-                sent = send(curr->threadinfo.sockfd, (void *)&spacket, sizeof(struct PACKET), 0);
+                strcpy(pesan,"send$");
+	        	strcat(pesan,packet.alias);
+	        	strcat(pesan, "$");
+	        	strcat(pesan, packet.buff);
+                //strcpy(spacket.option, "send");
+                //strcpy(spacket.alias, packet.alias);
+                //strcpy(spacket.buff, packet.buff);
+                sent = send(curr->threadinfo.sockfd, pesan, 200, 0);
             }
             pthread_mutex_unlock(&clientlist_mutex);
         }

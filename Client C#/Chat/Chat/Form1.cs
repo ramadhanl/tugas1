@@ -23,6 +23,7 @@ namespace Chat
         string alias = null;
         string buff = null;
         string myname;
+        int connect = 1;
         public Form1()
         {
             InitializeComponent();
@@ -33,7 +34,10 @@ namespace Chat
             readData = "Connected to Chat Server . . .";
             lblStatus.Text = "Connecting to 127.0.0.1:8888";
             msg();
-            clientSocket.Connect("127.0.0.1",8888);
+            int port;
+            port = Convert.ToInt32(txtPort.Text);
+            port = int.Parse(txtPort.Text);
+            clientSocket.Connect(txtAddress.Text,port);
             serverStream = clientSocket.GetStream();
             
             byte[] outStream = System.Text.Encoding.ASCII.GetBytes("name$" + txtAlias.Text + "$");
@@ -41,6 +45,7 @@ namespace Chat
             serverStream.Flush();
             lblMyName.Text = txtAlias.Text;
             lblStatus.Text = "Connected";
+            chatBox.Items.Add(Environment.NewLine + ">> " + readData);
             myname = txtAlias.Text;
             Thread ctThread = new Thread(getMessage);
             ctThread.Start();
@@ -49,7 +54,7 @@ namespace Chat
 
         private void getMessage()
         {
-            while(true)
+            while(connect==1)
             {
                 serverStream = clientSocket.GetStream();
                 int buffsize = 256;
@@ -72,6 +77,7 @@ namespace Chat
             else
             {
                 int count=0;
+                //chatBox.Items.Add(Environment.NewLine + "-> " + readData);
                 string[] words = readData.Split('$');
                 foreach (string word in words)
                 {
@@ -79,44 +85,47 @@ namespace Chat
                     {
                         option = "" + word;
                         count++;
-                        chatBox.Items.Add(Environment.NewLine + " >> " + option);
+                        //chatBox.Items.Add(Environment.NewLine + " >> " + option);
                     }
                     else if (count == 1)
                     {
                         alias = "" + word;
+                        count++;
                         //chatBox.Items.Add(Environment.NewLine + " >> " + alias);
                     }
                     else if (count == 2)
                     {
                         buff = "" + word;
-                        chatBox.Items.Add(Environment.NewLine + "Buff >> " + buff);
+                        count++;
+                        //chatBox.Items.Add(Environment.NewLine + "Buff >> " + buff);
                     }
                 }
 
                 if (option.Equals("list"))
                 {
+                    onlineBox.Items.Clear();
                     if (buff != null)
                     {
-                        chatBox.Items.Add("masuk");
                         string[] words2 = buff.Split('%');
                         foreach (string word2 in words2)
                         {
-                            onlineBox.Items.Add("haloo");
+                            onlineBox.Items.Add(word2);
                         }
                     }
-                    
+                    else
+                    {
+                        onlineBox.Items.Add("Tidak ada user yang online");
+                    }
                 }
                 if (option.Equals("pmpm"))
                 {
-                    chatBox.Items.Add(Environment.NewLine + "PM - [" + alias + "]>>  " + buff);
+                    chatBox.Items.Add(Environment.NewLine + "[PM][" + alias + "] >>  " + buff);
                 }
                 if (option.Equals("send"))
                 {
-                    chatBox.Items.Add(Environment.NewLine + "]>>  " + buff);
+                    chatBox.Items.Add(Environment.NewLine + "[" + alias + "] >>  " + buff);
                 }
             }
-
-            
         }
 
         private void btnCheckOnline_Click(object sender, EventArgs e)
@@ -132,6 +141,7 @@ namespace Chat
             serverStream.Write(outStream, 0, outStream.Length);
             serverStream.Flush();
             serverStream.Close();
+            connect = 0;
             lblStatus.Text = "Disconnected";
         }
 
@@ -140,7 +150,7 @@ namespace Chat
             byte[] outStream = System.Text.Encoding.ASCII.GetBytes("send$" + myname + "$" + txtPublicChat.Text);
             serverStream.Write(outStream, 0, outStream.Length);
             serverStream.Flush();
-            chatBox.Items.Add(Environment.NewLine + "Me : " + txtPublicChat.Text);
+            chatBox.Items.Add(Environment.NewLine + "Me >> " + txtPublicChat.Text);
         }
 
         private void btnPrivateChat_Click(object sender, EventArgs e)
@@ -148,6 +158,12 @@ namespace Chat
             byte[] outStream = System.Text.Encoding.ASCII.GetBytes("pmpm$" + myname + "$" + txtFriend.Text + "%" + txtPrivateChat.Text);
             serverStream.Write(outStream, 0, outStream.Length);
             serverStream.Flush();
+            chatBox.Items.Add(Environment.NewLine + "PM to " + txtFriend.Text +" >> " + txtPrivateChat.Text);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            chatBox.Items.Clear();
         }
 
 

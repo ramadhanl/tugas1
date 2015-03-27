@@ -16,3 +16,7 @@ C:\cygwin64\home\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.Properties.Resources.
 C:\cygwin64\home\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.csproj.GenerateResource.Cache
 C:\cygwin64\home\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.exe
 C:\cygwin64\home\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.pdb
+C:\cygwin64\home\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.exe.manifest
+C:\cygwin64\home\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.application
+C:\cygwin64\home\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.exe.manifest
+C:\cygwin64\home\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.application
