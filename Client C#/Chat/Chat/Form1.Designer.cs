@@ -38,15 +38,15 @@
             this.txtFriend = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblChatBox = new System.Windows.Forms.Label();
-            this.listOnline = new System.Windows.Forms.ListBox();
             this.lblOnline = new System.Windows.Forms.Label();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnCheckOnline = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lblMyName = new System.Windows.Forms.Label();
-            this.listChat = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.chatBox = new System.Windows.Forms.ListBox();
+            this.onlineBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // lblAlias
@@ -91,6 +91,7 @@
             this.btnPublicChat.TabIndex = 5;
             this.btnPublicChat.Text = "Send To All";
             this.btnPublicChat.UseVisualStyleBackColor = true;
+            this.btnPublicChat.Click += new System.EventHandler(this.btnPublicChat_Click);
             // 
             // txtPrivateChat
             // 
@@ -108,6 +109,7 @@
             this.btnPrivateChat.TabIndex = 7;
             this.btnPrivateChat.Text = "Send to My Friend";
             this.btnPrivateChat.UseVisualStyleBackColor = true;
+            this.btnPrivateChat.Click += new System.EventHandler(this.btnPrivateChat_Click);
             // 
             // txtFriend
             // 
@@ -134,14 +136,6 @@
             this.lblChatBox.Size = new System.Drawing.Size(108, 25);
             this.lblChatBox.TabIndex = 10;
             this.lblChatBox.Text = "Chat Box";
-            // 
-            // listOnline
-            // 
-            this.listOnline.FormattingEnabled = true;
-            this.listOnline.Location = new System.Drawing.Point(344, 77);
-            this.listOnline.Name = "listOnline";
-            this.listOnline.Size = new System.Drawing.Size(247, 173);
-            this.listOnline.TabIndex = 11;
             // 
             // lblOnline
             // 
@@ -192,14 +186,6 @@
             this.lblMyName.Size = new System.Drawing.Size(0, 15);
             this.lblMyName.TabIndex = 16;
             // 
-            // listChat
-            // 
-            this.listChat.FormattingEnabled = true;
-            this.listChat.Location = new System.Drawing.Point(23, 77);
-            this.listChat.Name = "listChat";
-            this.listChat.Size = new System.Drawing.Size(299, 173);
-            this.listChat.TabIndex = 17;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -218,18 +204,34 @@
             this.lblStatus.TabIndex = 19;
             this.lblStatus.Text = "None";
             // 
+            // chatBox
+            // 
+            this.chatBox.FormattingEnabled = true;
+            this.chatBox.Location = new System.Drawing.Point(23, 77);
+            this.chatBox.Name = "chatBox";
+            this.chatBox.Size = new System.Drawing.Size(299, 173);
+            this.chatBox.TabIndex = 21;
+            // 
+            // onlineBox
+            // 
+            this.onlineBox.FormattingEnabled = true;
+            this.onlineBox.Location = new System.Drawing.Point(349, 77);
+            this.onlineBox.Name = "onlineBox";
+            this.onlineBox.Size = new System.Drawing.Size(242, 173);
+            this.onlineBox.TabIndex = 22;
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(603, 363);
+            this.Controls.Add(this.onlineBox);
+            this.Controls.Add(this.chatBox);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.listChat);
             this.Controls.Add(this.lblMyName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnCheckOnline);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.lblOnline);
-            this.Controls.Add(this.listOnline);
             this.Controls.Add(this.lblChatBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtFriend);
@@ -261,15 +263,15 @@
         private System.Windows.Forms.TextBox txtFriend;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblChatBox;
-        private System.Windows.Forms.ListBox listOnline;
         private System.Windows.Forms.Label lblOnline;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Button btnCheckOnline;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblMyName;
-        private System.Windows.Forms.ListBox listChat;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.ListBox chatBox;
+        private System.Windows.Forms.ListBox onlineBox;
     }
 }
 

@@ -238,9 +238,8 @@ void ambildata(){
 					hit++;
 				}
 				else if(count==2){
-					buff[hit2]=pesan[i];
+					buff[i]=pesan[i];
 					hit2++;
-					//printf("\nbuff : %s",buff);
 				}
 			}
 			
@@ -260,12 +259,7 @@ void *client_handler(void *fd) {
     struct THREADINFO threadinfo = *(struct THREADINFO *)fd;
     struct LLNODE *curr;
     int bytes, sent;
-    char pesan[200];
     while(1) {
-    	strcpy(packet.option,"");
-		strcpy(packet.alias,"");
-		strcpy(packet.buff,"");
-		memset(&packet, 0, 0);
         bytes = recv(threadinfo.sockfd, (void *)&packet, sizeof(struct PACKET), 0);
         ambildata();
 		if(!bytes) {
@@ -289,19 +283,21 @@ void *client_handler(void *fd) {
             pthread_mutex_unlock(&clientlist_mutex);
         }
         else if(!strcmp(packet.option,"list")){
-        	strcpy(pesan,"list$");
-        	strcat(pesan,packet.alias);
+        	struct PACKET spacket;
+        	memset(&spacket, 0, sizeof(struct PACKET));
+        	strcpy(spacket.option, "list");
+        	strcpy(spacket.alias, packet.alias);
         	pthread_mutex_lock(&clientlist_mutex);
-        	strcat(pesan, "$");
+        	strcpy(spacket.buff, "Yang online :\n");
 			for(curr = client_list.head; curr != NULL; curr = curr->next) {
 				if(strcmp(curr->threadinfo.alias,packet.alias)!=0){
-					strcat(pesan, "[");strcat(pesan, curr->threadinfo.alias);strcat(pesan, "]");
-			    	strcat(pesan, "%");
+					strcat(spacket.buff, "[");strcat(spacket.buff, curr->threadinfo.alias);strcat(spacket.buff, "]");
+			    	strcat(spacket.buff, "\n");
 				}
 			   
 			}
 			//printf("%s |%s |%s ",spacket.alias,spacket.option,spacket.buff);
-			sent = send(threadinfo.sockfd, pesan, 200, 0);
+			sent = send(threadinfo.sockfd, (void *)&spacket, sizeof(struct PACKET), 0);
             pthread_mutex_unlock(&clientlist_mutex);
         }
         else if(!strcmp(packet.option, "pmpm")) {
@@ -315,7 +311,7 @@ void *client_handler(void *fd) {
                     struct PACKET spacket;
                     memset(&spacket, 0, sizeof(struct PACKET));
                     if(!compare(&curr->threadinfo, &threadinfo)) continue;
-                    strcpy(spacket.option, "pmpm");
+                    strcpy(spacket.option, "pm");
                     strcpy(spacket.alias, packet.alias);
                     strcpy(spacket.buff, &packet.buff[i]);
                     sent = send(curr->threadinfo.sockfd, (void *)&spacket, sizeof(struct PACKET), 0);
@@ -329,7 +325,7 @@ void *client_handler(void *fd) {
                 struct PACKET spacket;
                 memset(&spacket, 0, sizeof(struct PACKET));
                 if(!compare(&curr->threadinfo, &threadinfo)) continue;
-                strcpy(spacket.option, "send");
+                strcpy(spacket.option, "msg");
                 strcpy(spacket.alias, packet.alias);
                 strcpy(spacket.buff, packet.buff);
                 sent = send(curr->threadinfo.sockfd, (void *)&spacket, sizeof(struct PACKET), 0);

@@ -262,7 +262,7 @@ void *receiver(void *param) {
             close(sockfd);
             break;
         }
-        else if(recvd > 0 && (strcmp(packet.option,"pm")==0)) {
+        else if(recvd > 0 && (strcmp(packet.option,"pmpm")==0)) {
             printf("PM-[%s]: %s\n", packet.alias, packet.buff);
         }
         else if(recvd > 0 && (strcmp(packet.option,"list")==0)) {
