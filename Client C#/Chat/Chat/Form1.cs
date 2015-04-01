@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Net.Sockets;
+using System.Security.Cryptography;
+//Enkripsi Simetris : DES
+//Mode Operasi : CFB
+//Key Exchange : RSA
 
 namespace Chat
 {
@@ -23,10 +27,44 @@ namespace Chat
         string alias = null;
         string buff = null;
         string myname;
+        string plainText = null;
         int connect = 1;
         public Form1()
         {
             InitializeComponent();
+        }
+
+        
+
+        public void Encryption()
+        {
+            
+            //plainText = plainText + "TelahDienkripsi";
+            //Convert string to Hexa
+            char[] values = plainText.ToCharArray();
+            string hexText=null;
+            int count = 0,block=1;
+            foreach (char letter in values)
+            {
+                // Get the integral value of the character. 
+                int value = Convert.ToInt32(letter);
+                // Convert the decimal value to a hexadecimal value in string form. 
+                string hexOutput = String.Format("{0:X}", value);
+                if (count % 8 == 0)
+                {
+                    chatBox.Items.Add("Block [" + block +"] : " + hexText);
+                    block++;
+                    hexText = null;
+                }
+                count++;
+                hexText = hexText + "-" + hexOutput; 
+                //chatBox.Items.Add("Hexadecimal value of {"+ letter + " }is {" + hexOutput + "} - " + value);
+            }
+        }
+
+        public void Decryption()
+        {
+            readData = readData + "TelahDidekripsi";
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -63,6 +101,7 @@ namespace Chat
                 serverStream.Read(inStream,0,buffsize);
                 string returndata = System.Text.Encoding.ASCII.GetString(inStream);
                 readData = "" + returndata;
+                Decryption();
                 msg();
             }
         }
@@ -147,18 +186,22 @@ namespace Chat
 
         private void btnPublicChat_Click(object sender, EventArgs e)
         {
-            byte[] outStream = System.Text.Encoding.ASCII.GetBytes("send$" + myname + "$" + txtPublicChat.Text);
+            plainText = "send$" + myname + "$" + txtPublicChat.Text;
+            Encryption();
+            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(plainText);
             serverStream.Write(outStream, 0, outStream.Length);
             serverStream.Flush();
-            chatBox.Items.Add(Environment.NewLine + "Me >> " + txtPublicChat.Text);
+            chatBox.Items.Add(Environment.NewLine + "Me >> " + plainText);
         }
 
         private void btnPrivateChat_Click(object sender, EventArgs e)
         {
-            byte[] outStream = System.Text.Encoding.ASCII.GetBytes("pmpm$" + myname + "$" + txtFriend.Text + "%" + txtPrivateChat.Text);
+            plainText = "pmpm$" + myname + "$" + txtFriend.Text + "%" + txtPrivateChat.Text;
+            Encryption();
+            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(plainText);
             serverStream.Write(outStream, 0, outStream.Length);
             serverStream.Flush();
-            chatBox.Items.Add(Environment.NewLine + "PM to " + txtFriend.Text +" >> " + txtPrivateChat.Text);
+            chatBox.Items.Add(Environment.NewLine + "PM to " + txtFriend.Text +" >> " + plainText);
         }
 
         private void button1_Click(object sender, EventArgs e)
