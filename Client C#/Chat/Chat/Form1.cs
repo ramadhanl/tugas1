@@ -34,32 +34,37 @@ namespace Chat
             InitializeComponent();
         }
 
-        
+
+        public static string StringToBinary(string data)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (char c in data.ToCharArray())
+            {
+                sb.Append(Convert.ToString(c, 2).PadLeft(8, '0'));
+            }
+            return sb.ToString();
+        }
+
+        public static string BinaryToString(string data)
+        {
+            List<Byte> byteList = new List<Byte>();
+
+            for (int i = 0; i < data.Length; i += 8)
+            {
+                byteList.Add(Convert.ToByte(data.Substring(i, 8), 2));
+            }
+
+            return Encoding.ASCII.GetString(byteList.ToArray());
+        }
 
         public void Encryption()
         {
             
             //plainText = plainText + "TelahDienkripsi";
             //Convert string to Hexa
-            char[] values = plainText.ToCharArray();
-            string hexText=null;
-            int count = 0,block=1;
-            foreach (char letter in values)
-            {
-                // Get the integral value of the character. 
-                int value = Convert.ToInt32(letter);
-                // Convert the decimal value to a hexadecimal value in string form. 
-                string hexOutput = String.Format("{0:X}", value);
-                if (count % 8 == 0)
-                {
-                    chatBox.Items.Add("Block [" + block +"] : " + hexText);
-                    block++;
-                    hexText = null;
-                }
-                count++;
-                hexText = hexText + "-" + hexOutput; 
-                //chatBox.Items.Add("Hexadecimal value of {"+ letter + " }is {" + hexOutput + "} - " + value);
-            }
+            string values = plainText.ToString();
+            char[] bin = StringToBinary(values).ToCharArray();
         }
 
         public void Decryption()
@@ -186,6 +191,7 @@ namespace Chat
 
         private void btnPublicChat_Click(object sender, EventArgs e)
         {
+            
             plainText = "send$" + myname + "$" + txtPublicChat.Text;
             Encryption();
             byte[] outStream = System.Text.Encoding.ASCII.GetBytes(plainText);

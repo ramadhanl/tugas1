@@ -20,3 +20,16 @@ C:\cygwin64\home\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.exe.manifest
 C:\cygwin64\home\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.application
 C:\cygwin64\home\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.exe.manifest
 C:\cygwin64\home\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.application
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.exe.config
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.exe
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.pdb
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.exe.manifest
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.application
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.exe
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\bin\Debug\Chat.pdb
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.csprojResolveAssemblyReference.cache
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.Form1.resources
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.Properties.Resources.resources
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.csproj.GenerateResource.Cache
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.exe.manifest
+D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.application
