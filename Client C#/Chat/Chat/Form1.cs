@@ -29,6 +29,7 @@ namespace Chat
         string myname;
         string plainText = null;
         int connect = 1;
+        char[] bin;
         public Form1()
         {
             InitializeComponent();
@@ -64,7 +65,8 @@ namespace Chat
             //plainText = plainText + "TelahDienkripsi";
             //Convert string to Hexa
             string values = plainText.ToString();
-            char[] bin = StringToBinary(values).ToCharArray();
+            bin = StringToBinary(values).ToCharArray();
+            plainText = new string(bin);
         }
 
         public void Decryption()
@@ -192,7 +194,7 @@ namespace Chat
         private void btnPublicChat_Click(object sender, EventArgs e)
         {
             
-            plainText = "send$" + myname + "$" + txtPublicChat.Text;
+            plainText = "send$" + myname + "$" + txtPublicChat.Text + bin;
             Encryption();
             byte[] outStream = System.Text.Encoding.ASCII.GetBytes(plainText);
             serverStream.Write(outStream, 0, outStream.Length);
