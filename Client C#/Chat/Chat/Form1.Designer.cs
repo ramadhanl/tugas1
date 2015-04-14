@@ -52,6 +52,8 @@
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtPort = new System.Windows.Forms.TextBox();
+            this.progressBox = new System.Windows.Forms.RichTextBox();
+            this.progressBox2 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // lblAlias
@@ -282,10 +284,28 @@
             this.txtPort.Size = new System.Drawing.Size(103, 20);
             this.txtPort.TabIndex = 27;
             // 
+            // progressBox
+            // 
+            this.progressBox.Location = new System.Drawing.Point(11, 396);
+            this.progressBox.Name = "progressBox";
+            this.progressBox.Size = new System.Drawing.Size(580, 81);
+            this.progressBox.TabIndex = 28;
+            this.progressBox.Text = "";
+            // 
+            // progressBox2
+            // 
+            this.progressBox2.Location = new System.Drawing.Point(13, 510);
+            this.progressBox2.Name = "progressBox2";
+            this.progressBox2.Size = new System.Drawing.Size(578, 75);
+            this.progressBox2.TabIndex = 29;
+            this.progressBox2.Text = "";
+            // 
             // Form1
             // 
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(603, 398);
+            this.ClientSize = new System.Drawing.Size(603, 597);
+            this.Controls.Add(this.progressBox2);
+            this.Controls.Add(this.progressBox);
             this.Controls.Add(this.txtPort);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtAddress);
@@ -346,6 +366,8 @@
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtPort;
+        private System.Windows.Forms.RichTextBox progressBox;
+        private System.Windows.Forms.RichTextBox progressBox2;
     }
 }
 
