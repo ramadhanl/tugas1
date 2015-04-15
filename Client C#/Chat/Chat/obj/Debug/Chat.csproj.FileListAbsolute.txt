@@ -33,5 +33,3 @@ D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.Pro
 D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.csproj.GenerateResource.Cache
 D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.exe.manifest
 D:\College Document\Semester 6\KIJ\tugas1\Client C#\Chat\Chat\obj\Debug\Chat.application
-F:\DATA PENTING\KULIAH\SEMESTER 6\KIJ E\chat\Client C#\Chat\Chat\bin\Debug\Chat.exe.config
-F:\DATA PENTING\KULIAH\SEMESTER 6\KIJ E\chat\Client C#\Chat\Chat\obj\Debug\Chat.exe
