@@ -55,8 +55,6 @@ namespace Chat
                      {4 , 1 , 14 , 8  ,13 , 6  , 2 ,11 , 15 ,12  , 9  ,7  , 3, 10  , 5 , 0},
                      {15, 12  , 8,  2  , 4 , 9 ,  1  ,7  , 5 ,11  , 3 ,14  ,10 , 0  , 6, 13}
                      };
-        Tuple<string, string> myKey;
-        Tuple<string, string> pubKey;
         private Thread _pThread;
         private Thread _qThread;
         private Thread _eThread;
@@ -77,7 +75,7 @@ namespace Chat
             // Create two prime numbers
             var p = new PrimeNumber();
             var q = new PrimeNumber();
-        
+
             p.SetNumber(Generator.Random(numMin, numMin));
             q.SetNumber(Generator.Random(numMin, numMax));
 
@@ -171,11 +169,11 @@ namespace Chat
                         // N
                         //textBox6.Text = n.ToString();
                         //textBox8.Text = n.ToString();
-                        myKey = new Tuple<string, string>(d.ToString(), n.ToString());
-                        // E Public Key
+
+                        // E
                         //textBox5.Text = e.GetPrimeNumber().ToString();
-                        pubKey = new Tuple<string, string>(e.GetPrimeNumber().ToString(), n.ToString());
-                        // D Private Key
+
+                        // D
                         //textBox7.Text = d.ToString();
                     }
                     else
@@ -187,35 +185,6 @@ namespace Chat
             else
             {
 
-            }
-            try
-            {
-                _pThread.Abort();
-            }
-            // ReSharper disable EmptyGeneralCatchClause
-            catch (Exception)
-            // ReSharper restore EmptyGeneralCatchClause
-            {
-            }
-
-            try
-            {
-                _qThread.Abort();
-            }
-            // ReSharper disable EmptyGeneralCatchClause
-            catch (Exception)
-            // ReSharper restore EmptyGeneralCatchClause
-            {
-            }
-
-            try
-            {
-                _eThread.Abort();
-            }
-            // ReSharper disable EmptyGeneralCatchClause
-            catch (Exception)
-            // ReSharper restore EmptyGeneralCatchClause
-            {
             }
         }	
 
@@ -414,8 +383,7 @@ namespace Chat
             myname = txtAlias.Text;
             Thread ctThread = new Thread(getMessage);
             ctThread.Start();
-            GenerateKey();
-            chatBox.Items.Add(Environment.NewLine + myKey.Item1.ToString() + " " + myKey.Item2.ToString());
+            
         }
 
         private void getMessage()
