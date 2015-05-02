@@ -42,14 +42,22 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+<<<<<<< HEAD:Tugas chat dengan enkripsi DES/Client C#/Chat/Chat/obj/Debug/Chat.exe.manifest
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Chat.exe" size="22016">
+=======
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Chat.exe" size="27648">
+>>>>>>> origin/master:Client C#/Chat/Chat/obj/Debug/Chat.exe.manifest
       <assemblyIdentity name="Chat" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+<<<<<<< HEAD:Tugas chat dengan enkripsi DES/Client C#/Chat/Chat/obj/Debug/Chat.exe.manifest
         <dsig:DigestValue>6z0fVxXcSYQZjumtcROh6z2VH7XvMreJOqtxLmHpDJ0=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>n3UfDwBvUCcrLxffgJt2NlOfuPJ03irmTUSOgodrbKE=</dsig:DigestValue>
+>>>>>>> origin/master:Client C#/Chat/Chat/obj/Debug/Chat.exe.manifest
       </hash>
     </dependentAssembly>
   </dependency>

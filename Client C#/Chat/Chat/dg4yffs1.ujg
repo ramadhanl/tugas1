@@ -40,11 +40,11 @@ namespace Chat
         string textbiner;
         string[] plainBlock = new string[50];
         string initialp = null;
-        string datablock,r2,re,rs2,free,le,free2,data;
+        string datablock,r2,re,rs2;
         string[] rs = new string[8];
         string[] rs3 = new string[8];
-        string[] l = new string[17];
-        string[] r = new string[17];
+        string[] l = new string[16];
+        string[] r = new string[16];
         int[] pc1 = { 57, 49, 41, 33, 25, 17, 9, 1, 58, 50, 42, 34, 26, 18, 10, 2, 59, 51, 43, 35, 27, 19, 11, 3, 60, 52, 44, 36, 63, 55, 47, 39, 31, 23, 15, 7, 62, 54, 46, 38, 30, 22, 14, 6, 61, 53, 45, 37, 29, 21, 13, 5, 28, 20, 12, 4 };
         int[] pc2 = { 14, 17, 11, 24, 1, 5, 3, 28, 15, 6, 21, 10, 23, 19, 12, 4, 26, 8, 16, 7, 27, 20, 13, 2, 41, 52, 31, 37, 47, 55, 30, 40, 51, 45, 33, 48, 44, 49, 39, 56, 34, 53, 46, 42, 50, 36, 29, 32 };
         int[] ip = { 58, 50, 42, 34, 26, 18, 10, 2, 60, 52, 44, 36, 28, 20, 12, 4, 62, 54, 46, 38, 30, 22, 14, 6, 64, 56, 48, 40, 32, 24, 16, 8, 57, 49, 41, 33, 25, 17, 9, 1, 59, 51, 43, 35, 27, 19, 11, 3, 61, 53, 45, 37, 29, 21, 13, 5, 63, 55, 47, 39, 31, 23, 15, 7 };
@@ -55,15 +55,9 @@ namespace Chat
                      {4 , 1 , 14 , 8  ,13 , 6  , 2 ,11 , 15 ,12  , 9  ,7  , 3, 10  , 5 , 0},
                      {15, 12  , 8,  2  , 4 , 9 ,  1  ,7  , 5 ,11  , 3 ,14  ,10 , 0  , 6, 13}
                      };
-<<<<<<< HEAD:Tugas chat dengan enkripsi DES/Client C#/Chat/Chat/Form1.cs
-        int[] pt = { 16, 7, 20, 21, 29, 12, 28, 17, 1, 15, 23, 26, 5, 18, 31, 10, 2, 8, 24, 1432, 27, 3, 919, 13, 30, 6, 22, 11, 4, 25 };
-=======
-        Tuple<string, string> myKey;
-        Tuple<string, string> pubKey;
         private Thread _pThread;
         private Thread _qThread;
         private Thread _eThread;
->>>>>>> origin/master:Client C#/Chat/Chat/Form1.cs
         public Form1()
         {
             InitializeComponent();
@@ -81,7 +75,7 @@ namespace Chat
             // Create two prime numbers
             var p = new PrimeNumber();
             var q = new PrimeNumber();
-        
+
             p.SetNumber(Generator.Random(numMin, numMin));
             q.SetNumber(Generator.Random(numMin, numMax));
 
@@ -175,11 +169,11 @@ namespace Chat
                         // N
                         //textBox6.Text = n.ToString();
                         //textBox8.Text = n.ToString();
-                        myKey = new Tuple<string, string>(d.ToString(), n.ToString());
-                        // E Public Key
+
+                        // E
                         //textBox5.Text = e.GetPrimeNumber().ToString();
-                        pubKey = new Tuple<string, string>(e.GetPrimeNumber().ToString(), n.ToString());
-                        // D Private Key
+
+                        // D
                         //textBox7.Text = d.ToString();
                     }
                     else
@@ -192,35 +186,6 @@ namespace Chat
             {
 
             }
-            try
-            {
-                _pThread.Abort();
-            }
-            // ReSharper disable EmptyGeneralCatchClause
-            catch (Exception)
-            // ReSharper restore EmptyGeneralCatchClause
-            {
-            }
-
-            try
-            {
-                _qThread.Abort();
-            }
-            // ReSharper disable EmptyGeneralCatchClause
-            catch (Exception)
-            // ReSharper restore EmptyGeneralCatchClause
-            {
-            }
-
-            try
-            {
-                _eThread.Abort();
-            }
-            // ReSharper disable EmptyGeneralCatchClause
-            catch (Exception)
-            // ReSharper restore EmptyGeneralCatchClause
-            {
-            }
         }	
 
         //Create 16 Subkeys
@@ -230,35 +195,41 @@ namespace Chat
             int p;
             c[0] = null;
             key = new string(StringToBinary(values).ToCharArray());
-            //Permuted choice 1
-            for (int i = 0; i < 56; i++)
+            //Permuted Choice 1(64->56)
+            for (int i=0; i < 56; i++)
             {
-                p = pc1[i] - 1;
+                p = pc1[i]-1;
                 key2 = key2 + key[p];
-                if(i<28)
+                if (i < 28)
+                {
                     c[0] = c[0] + key[p];
+                }
                 else
+                {
                     d[0] = d[0] + key[p];
+                }
             }
-            //Left Circular Shift
+            //Left Circular Shift 1-16 keys
             for (int i = 0; i < 16; i++)
             {
-                c[i] = c[i-1];
-                d[i] = d[i-1];
+                c[i] = c[0];
+                d[i] = d[0];
             }
-            //Permuted Choice 2
+
+            //Permuted Choice 2 (56->48)
             for (int j = 0; j < 16; j++)
             {
                 skey = c[0] + d[0];
                 skey2[j] = null;
                 for (int i = 0; i < 48; i++)
                 {
-                    p = pc2[i] - 1;
+                    p = pc2[i]-1;
                     skey2[j] = skey2[j] + skey[p];
                 }
             }
+                
             progressBox.Text = skey;
-            progressBox2.Text = skey2[15];
+            progressBox2.Text = skey2[15]; 
         }
         //Encode 64 bit data
         public void DES()
@@ -278,8 +249,6 @@ namespace Chat
                     r[0] = r[0] + datablock[p];
                 }
             }
-            progressBox.Text = initialp;
-
             for (int i = 1; i <=16; i++)
             {
                 l[i] = r[i - 1];
@@ -293,16 +262,8 @@ namespace Chat
                     re = re + r2[p];
                 }
                 //XORkan re dengan subkey[i]
-                free = null;
                 for (int j = 0; j < 48; j++)
                 {
-<<<<<<< HEAD:Tugas chat dengan enkripsi DES/Client C#/Chat/Chat/Form1.cs
-                    free2 = skey2[i-1];
-                    if (re[j] == free2[j])
-                        free = free + "0";
-                    else
-                        free = free + "1";
-=======
                     if (re[j] == skey2[i][j])
                     {
                         char[] arr = re.ToCharArray();
@@ -315,101 +276,32 @@ namespace Chat
                         arr[j] = '0';
                         re = new string(arr);
                     }
->>>>>>> origin/master:Client C#/Chat/Chat/Form1.cs
                 }
-                re = free;
+
                 //Substitution choice
                 int cnt = 0;
                 rs[0] = null;
                 for (int x = 0; x < 48; x++)
                 {
-                    if (i+1 % 6 == 0 && i!=47)
+                    if (i+1 % 6 == 0)
                     {
                         cnt++;
-<<<<<<< HEAD:Tugas chat dengan enkripsi DES/Client C#/Chat/Chat/Form1.cs
-                        rs[cnt] = null;
-=======
                         char[] arr = re.ToCharArray();
                         arr[cnt] = '\0';
                         re = new string(arr);
->>>>>>> origin/master:Client C#/Chat/Chat/Form1.cs
                     }
                     rs[cnt] = rs[cnt] + re[x];
                 }
                 for (int x = 0; x < 8; x++)
                 {
                     rs2 = rs[x];
-                    //rs2 = "010101";
                     int xi, yi,zi;
-<<<<<<< HEAD:Tugas chat dengan enkripsi DES/Client C#/Chat/Chat/Form1.cs
-                    int a, b, c, d, e, f;
-                    if (rs2[0] == '1')
-                        a = 1;
-                    else
-                        a = 0;
-                    if (rs2[1] == '1')
-                        b = 1;
-                    else
-                        b = 0;
-                    if (rs2[2] == '1')
-                        c = 1;
-                    else
-                        c = 0;
-                    if (rs2[3] == '1')
-                        d = 1;
-                    else
-                        d = 0;
-                    if (rs2[4] == '1')
-                        e = 1;
-                    else
-                        e = 0;
-                    if (rs2[5] == '1')
-                        f = 1;
-                    else
-                        f = 0;
-
-                    xi = a * 2 + f * 1;
-                    yi = b * 8 + c * 4 + d * 2 + e * 1;
-             
-                    zi = sb1[xi,yi];
-                    rs[x] = Convert.ToString(zi, 2); //Convert int to Binary
-                    chatBox.Items.Add(Environment.NewLine + "-> " + rs[x] + "-" + zi + "-" + xi + "-" + yi+ "-" + rs[x]);
-=======
                     xi = rs2[0] * 1 + rs2[5] * 2;
                     yi = rs2[1] * 1 + rs2[2] * 2 + rs2[3] * 3 + rs2[4] * 4;
                     zi = sb1[xi,yi];
->>>>>>> origin/master:Client C#/Chat/Chat/Form1.cs
                 }
-                r[i] = null;
-                for (int x = 0; x < 8; x++)
-                {
-                    r[i] = r[i] + rs[x];
-                }
-                //Permutation
-                re = null;
-                /*for (int a = 0; a < 32; a++)
-                {
-                    int p = pt[a] - 1;
-                    re = re + r[p];
-                }*/
-                r[i] = re;
-
-                //XORkan R dengan L
-                free = null;
-                //re = r[i];
-                re = "01010101010101010101010101010101";
-                le = l[i-1];
-                for (int j = 0; j < 32; j++)
-                {
-                    if (re[j] == le[j])
-                        free = free + "0";
-                    else
-                        free = free + "1";
-                }
-                le = free;
-                r[i] = free;
+                
             }
-            progressBox2.Text = l[1]+r[1];
         }
 
         //Create Block
@@ -421,15 +313,15 @@ namespace Chat
             textbiner = null;
             for (int i = 0; i < x; i++)
             {
-                if (i % 64==0 && i!=0)
+                if (i % 63==0 && i!=0)
                 {
                     count++;
                     plainBlock[count] = null;
                 }
                 plainBlock[count] = plainBlock[count] + plainText[i];
             }
-            //progressBox.Text = plainText;
-            //progressBox2.Text = plainBlock[0];
+            progressBox.Text = plainText;
+            progressBox2.Text = plainBlock[0];
         }
         public static string StringToBinary(string data)
         {
@@ -461,9 +353,9 @@ namespace Chat
             plainText = new string(bin);
             //plainText = plainText + "TelahDienkripsi";
             //Convert string to Hexa
-            CreateSubKeys();
-            //CreateBlock();
-            //DES();
+            //CreateSubKeys();
+            CreateBlock();
+            
         }
 
         public void Decryption()
@@ -491,8 +383,7 @@ namespace Chat
             myname = txtAlias.Text;
             Thread ctThread = new Thread(getMessage);
             ctThread.Start();
-            GenerateKey();
-            chatBox.Items.Add(Environment.NewLine + myKey.Item1.ToString() + " " + myKey.Item2.ToString());
+            
         }
 
         private void getMessage()
@@ -591,10 +482,10 @@ namespace Chat
 
         private void btnPublicChat_Click(object sender, EventArgs e)
         {
-            plainText = txtPublicChat.Text;
-            data = "send$" + myname + "$" + plainText;
+            
+            plainText = "send$" + myname + "$" + txtPublicChat.Text + bin;
             Encryption();
-            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(data);
+            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(plainText);
             serverStream.Write(outStream, 0, outStream.Length);
             serverStream.Flush();
             chatBox.Items.Add(Environment.NewLine + "Me >> " + plainText);

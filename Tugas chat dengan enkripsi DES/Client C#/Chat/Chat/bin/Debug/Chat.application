@@ -14,7 +14,11 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+<<<<<<< HEAD:Tugas chat dengan enkripsi DES/Client C#/Chat/Chat/bin/Debug/Chat.application
         <dsig:DigestValue>d7svGkXkOqxnXRB0FVAeFLKhz1Yw6ikbOmY81Bvx3o8=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>EoHgT7uVMh5/ESM68yI7knwS9vRl1BPQVgZ45KxU0WI=</dsig:DigestValue>
+>>>>>>> origin/master:Client C#/Chat/Chat/obj/Debug/Chat.application
       </hash>
     </dependentAssembly>
   </dependency>
